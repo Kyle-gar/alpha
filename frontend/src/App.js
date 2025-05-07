@@ -1,3 +1,5 @@
+const baseURL = import.meta.env.VITE_API_URL;
+
 import { useState } from 'react';
 import axios from 'axios';
 import SignalDashboard from './components/SignalDashboard';
@@ -10,8 +12,8 @@ export default function App() {
   const [history, setHistory] = useState([]);
 
   const handlePredict = async () => {
-    const res = await axios.get(`http://localhost:8000/predict/${symbol}`);
-    const riskRes = await axios.get(`http://localhost:8000/risk/${symbol}`);
+    const res = await axios.get(`${baseURL}/predict/${symbol}`);
+    const riskRes = await axios.get(`${baseURL}/risk/${symbol}`);
     setPrediction(res.data.predicted_price);
     setRisk(riskRes.data.VaR);
     setHistory((prev) => [...prev, { date: new Date().toISOString(), price: res.data.predicted_price }]);
